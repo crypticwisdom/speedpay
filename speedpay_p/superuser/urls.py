@@ -9,6 +9,7 @@ urlpatterns = [
     path('product', AdminCrudProduct.as_view(), name="product"),
     path('add-product', AdminCrudProduct.as_view(), name="add_product"),
     path('update-product/<str:slug>', AdminCrudProduct.as_view(), name="update_product"),
+    path('delete-product/<str:slug>', AdminCrudProduct.as_view(), name="delete_product"),
 
     path('logout', LogoutView.as_view(), name="logout"),
 ]

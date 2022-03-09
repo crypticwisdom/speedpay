@@ -163,12 +163,28 @@ class AdminCrudProduct(APIView):
             product.name = data.get("name", "")
             product.title = data.get("title", "")
             product.description = data.get("description", "")
-            product.categories; print(product.categories)
+            product.categories
             product.size = data.get("size", '')
             product.price = data.get("price", "")
             product.quantity_available = data.get("quantity", "")
 
+            product.save()
+
             return Response({"success": True, "detail": "Product Detail", "status": status.HTTP_201_CREATED})
+        except Exception as err:
+            return Response({"detail": str(err),
+                             "message": "Product Not Found.",
+                             "status": status.HTTP_403_FORBIDDEN})
+
+    def delete(self, request, slug):
+        if slug is None:
+            return Response({"message": "Product Not Found.",
+                             "status": status.HTTP_403_FORBIDDEN})
+        try:
+            data = request.data
+            product = Product.objects.get(slug=slug)
+            product.delete()
+            return Response({"success": True, "detail": "Product Deleted", "status": status.HTTP_200_OK})
         except Exception as err:
             return Response({"detail": str(err),
                              "message": "Product Not Found.",
