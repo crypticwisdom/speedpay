@@ -152,8 +152,27 @@ class AdminCrudProduct(APIView):
         except (Exception, ) as err:
             return Response({"error": str(err)})
 
-    def put(self, request):
-        return Response({"message": "Update"})
+    def put(self, request, slug):
+        if slug is None:
+            return Response({"message": "Product Not Found.",
+                             "status": status.HTTP_403_FORBIDDEN})
+        try:
+            data = request.data
+            product = Product.objects.get(slug=slug)
+
+            product.name = data.get("name", "")
+            product.title = data.get("title", "")
+            product.description = data.get("description", "")
+            product.categories; print(product.categories)
+            product.size = data.get("size", '')
+            product.price = data.get("price", "")
+            product.quantity_available = data.get("quantity", "")
+
+            return Response({"success": True, "detail": "Product Detail", "status": status.HTTP_201_CREATED})
+        except Exception as err:
+            return Response({"detail": str(err),
+                             "message": "Product Not Found.",
+                             "status": status.HTTP_403_FORBIDDEN})
 
 
 class LogoutView(APIView):

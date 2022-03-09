@@ -8,7 +8,7 @@ urlpatterns = [
     path('dashboard', DashBoard.as_view(), name="dashboard"),
     path('product', AdminCrudProduct.as_view(), name="product"),
     path('add-product', AdminCrudProduct.as_view(), name="add_product"),
-    path('update-product', AdminCrudProduct.as_view(), name="update_product"),
+    path('update-product/<str:slug>', AdminCrudProduct.as_view(), name="update_product"),
 
     path('logout', LogoutView.as_view(), name="logout"),
 ]
